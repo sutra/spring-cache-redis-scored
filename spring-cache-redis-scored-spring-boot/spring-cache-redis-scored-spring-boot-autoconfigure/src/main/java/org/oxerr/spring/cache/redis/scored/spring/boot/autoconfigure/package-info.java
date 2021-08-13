@@ -1,0 +1,1 @@
+package org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure;

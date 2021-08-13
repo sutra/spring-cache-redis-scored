@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure.ScoredRedisCacheAutoConfiguration
