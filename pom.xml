@@ -15,8 +15,11 @@
 	<artifactId>spring-cache-redis-scored</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>spring-cache-redis-scored</name>
-	<description>Cache storage using Redis sorted set.</description>
+	<name>Spring Cache Redis Scored</name>
+	<description>
+		Cache storage using Redis sorted set,
+		to prevent stale data returned from cache querying.
+	</description>
 	<url>https://oxerr.org/spring-cache-redis-scored</url>
 	<inceptionYear>2021</inceptionYear>
 	<properties>

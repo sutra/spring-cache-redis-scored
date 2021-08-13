@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-core</artifactId>
+	<name>Spring Cache Redis Scored Core</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.data</groupId>

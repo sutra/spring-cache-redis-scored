@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-score-resolver</artifactId>
+	<name>Spring Cache Redis Scored Score Resolver</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>spring-cache-redis-scored-score-resolver-annotation</module>

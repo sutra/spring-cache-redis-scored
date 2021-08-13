@@ -10,6 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-coverage</artifactId>
+	<name>Spring Cache Redis Scored Coverage</name>
 	<description>Compute aggregated test code coverage.</description>
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>

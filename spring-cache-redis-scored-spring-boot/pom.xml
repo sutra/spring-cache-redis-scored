@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-spring-boot</artifactId>
+	<name>Spring Cache Redis Scored Spring Boot</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>spring-cache-redis-scored-spring-boot-autoconfigure</module>

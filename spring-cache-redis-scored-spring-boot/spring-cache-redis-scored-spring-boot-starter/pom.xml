@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
+	<name>Spring Cache Redis Scored Spring Boot Starter</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>

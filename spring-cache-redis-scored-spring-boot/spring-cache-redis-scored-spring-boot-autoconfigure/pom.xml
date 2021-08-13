@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-spring-boot-autoconfigure</artifactId>
+	<name>Spring Cache Redis Scored Spring Boot Auto Configure</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

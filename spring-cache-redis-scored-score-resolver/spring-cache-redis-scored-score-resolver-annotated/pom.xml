@@ -12,6 +12,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-score-resolver-annotated</artifactId>
+	<name>Spring Cache Redis Scored Socre Resolver Annotated</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
