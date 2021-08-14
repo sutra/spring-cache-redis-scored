@@ -10,10 +10,6 @@
 	<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 	<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
 </dependency>
-<dependency>
-	<groupId>redis.clients</groupId>
-	<artifactId>jedis</artifactId>
-</dependency>
 ```
 
 #### 使用注解标记缓存数据类里的版本字段或方法，以便 ScoreResolver 从中获取值

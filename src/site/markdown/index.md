@@ -10,10 +10,6 @@ Cache storage using Redis sorted set, to prevent returning stale data.
 	<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 	<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
 </dependency>
-<dependency>
-	<groupId>redis.clients</groupId>
-	<artifactId>jedis</artifactId>
-</dependency>
 ```
 
 #### Mark your cached data class with supported annotation for ScoreResolver
