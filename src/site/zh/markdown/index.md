@@ -51,12 +51,12 @@ public Book getByIsbn(String isbn) {
 }
 
 /**
- * The @CachePut is required for preventing stale data.
+ * 在这里使用 @CachePut 来确保，写完持久层后，将新版本写入缓存。
  */
 @CachePut(value = "books", key = "#result.getIsbn()")
 public Book save(Book book) {
 
-	// 可以使用数据库行记录锁或者乐观锁，来确保 book.version 字段在多线程情况下安全地递增。
+	// 可以使用数据库行记录锁或者乐观锁，来确保 book.version 字段在并发请求的情况下安全地递增。
 
 	return saveToPersistence(isbn);
 }
