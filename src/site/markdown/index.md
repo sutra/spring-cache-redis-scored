@@ -71,7 +71,7 @@ in [spring-data-redis](https://spring.io/projects/spring-data-redis) uses
 [`set`](https://redis.io/commands/set)/[`setNX`](https://redis.io/commands/setnx),
 [`get`](https://redis.io/commands/get)
 commands to set/get cache entries
-(see `org.springframework.data.redis.cache.RedisCacheWriter`),
+(see [`org.springframework.data.redis.cache.RedisCacheWriter`](https://github.com/spring-projects/spring-data-redis/blob/main/src/main/java/org/springframework/data/redis/cache/DefaultRedisCacheWriter.java)),
 this may cause stale data returned from caching querying, in this scenario.
 
 Assuming we have 2 concurrent requests,
