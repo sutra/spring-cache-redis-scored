@@ -46,7 +46,7 @@ import org.springframework.cache.annotation.Cacheable;
 public Book getByIsbn(String isbn) {
 	Book book = getByIsbnFromPersistence(isbn);
 
-	// Maybe some slow work goes here.
+	// Maybe some slow works go here.
 
 	return book;
 }
@@ -72,15 +72,20 @@ in [spring-data-redis](https://spring.io/projects/spring-data-redis) uses
 [`get`](https://redis.io/commands/get)
 commands to set/get cache entries
 (see `org.springframework.data.redis.cache.RedisCacheWriter`),
-this may cause stale data returned from caching querying, in this scenario:
+this may cause stale data returned from caching querying, in this scenario.
 
-1. the cached data is expired;
-2. thread A queries data from persistence layer, got old data(version 1);
-3. thread B writes new data(version 2) into persistence layer;
-4. thread B **evicts old data** from cache;
-5. thread A puts old data into cache;
-6. now we have the old data(version 1) in cache,
-and when querying from cache, the old data will be returned,
+Assuming we have 2 concurrent requests,
+request A querying data, and request B updating data,
+then the following scenario may happen:
+
+1. The cached data is expired;
+2. Request A queries data from persistence layer, got old data(version 1);
+3. Request B writes new data(version 2) into persistence layer;
+4. **Request B evicts old data from cache;**
+5. Request A puts old data into cache;
+
+Now we have the old data(version 1) in cache,
+and when querying from cache, the old data(version 1) will be returned,
 before the cache entry is expired or evicted.
 
 But `ScoredRedisCache` uses
@@ -93,11 +98,15 @@ this saves versioned data as sorted set in Redis with different scores,
 and always returns the newest versioned data, lets replay the above scenario,
 to demonstrate how `ScoredRedisCache` prevents stale data:
 
-1. the cached data is expired;
-2. thread A queries data from persistence layer, got old data(version 1);
-3. thread B writes new data(version 2) into persistence layer;
-4. thread B **writes new data(version 2)** into cache with score 2;
-5. thread A add old data(version 1) into cache with score 1;
-6. now we have 2 verions of data in cache,
-and when querying from cache, the newest version of data will be returned,
+1. The cached data is expired;
+2. Request A queries data from persistence layer, got old data(version 1);
+3. Request B writes new data(version 2) into persistence layer;
+4. **Request B writes new data(version 2) into cache with score 2;**
+5. Request A add old data(version 1) into cache with score 1;
+
+Now we have 2 verions of data in cache,
+the version 1 is score = 1, and the version 2 is score = 2.
+And when querying from cache,
+the newest version with maximum score(score = 2, version = 2) of data
+will be returned,
 by using Redis command `ZREVRANGEBYSCORE key +inf -inf limit 0 1`.

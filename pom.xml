@@ -25,6 +25,7 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<locales>en,zh_CN</locales>
 	</properties>
 	<modules>
 		<module>spring-cache-redis-scored-core</module>

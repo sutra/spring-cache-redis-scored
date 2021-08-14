@@ -8,8 +8,8 @@
 		<version>1.9</version>
 	</skin>
 	<body>
-		<menu name="documentaton">
-			<item name="简体中文" href="zh/index.html" />
+		<menu name="文档">
+			<item name="English" href="../index.html" />
 		</menu>
 		<menu ref="parent" inherit="top" />
 		<menu ref="modules" inherit="top" />
