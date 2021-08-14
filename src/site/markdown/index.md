@@ -1,5 +1,6 @@
 ## About Spring Cache Redis Scored
-Cache storage using Redis sorted set, to prevent returning stale data.
+Spring cache implementation using Redis sorted set,
+to prevent returning stale data in cache querying.
 
 ### How to use
 

@@ -1,5 +1,5 @@
 ## 关于 Spring Cache Redis Scored
-使用 Redis 有序集合存储的缓存后端存储实现，可避免缓存查询时返回脏数据。
+使用 Redis 有序集合存储的 Spring 缓存实现，可避免缓存查询时返回脏数据。
 
 ### 如何使用
 

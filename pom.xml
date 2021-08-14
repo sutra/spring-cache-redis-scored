@@ -17,7 +17,8 @@
 	<packaging>pom</packaging>
 	<name>Spring Cache Redis Scored</name>
 	<description>
-		Cache storage using Redis sorted set, to prevent returning stale data.
+		Spring cache implementation using Redis sorted set,
+		to prevent returning stale data in cache querying.
 	</description>
 	<url>https://oxerr.org/spring-cache-redis-scored</url>
 	<inceptionYear>2021</inceptionYear>
