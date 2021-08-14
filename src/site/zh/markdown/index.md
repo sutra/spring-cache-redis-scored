@@ -71,15 +71,16 @@ public Book save(Book book) {
 [`get`](https://redis.io/commands/get)
 命令来存取缓存数据
 （见 [`org.springframework.data.redis.cache.RedisCacheWriter`](https://github.com/spring-projects/spring-data-redis/blob/main/src/main/java/org/springframework/data/redis/cache/DefaultRedisCacheWriter.java)），
-这在下面的情况下，可能导致在查询缓存时返回脏数据。
+这在下面的情况下，可能导致在查询缓存时返回脏数据
+（参见项目 `spring-cache-redis-scored-example-spring-data-redis-cache`）。
 
 假设有两个并发请求，一个请求 A 做查询操作，一个请求 B 做更新操作，那么会有如下情形发生：
 
-1. 缓存刚好失效；
-2. 请求 A 查询持久层，得到一个旧值（版本 1）；
-3. 请求 B 将新值（版本 2）写入持久层；
-4. **请求 B 删除缓存；**
-5. 请求 A 将查到的旧值（版本 1）写入缓存；
+1. 缓存刚好失效。
+2. 请求 A 查询持久层，得到一个旧值（版本 1）。
+3. 请求 B 将新值（版本 2）写入持久层。
+4. **请求 B 删除缓存。**
+5. 请求 A 将查到的旧值（版本 1）写入缓存。
 
 那么现在，在缓存过期或者主动清除前，查询缓存，就会返回旧值（版本 1）。
 
@@ -91,13 +92,14 @@ public Book save(Book book) {
 （见 `org.oxerr.spring.cache.redis.scored.ScoredRedisCacheWriter`），
 这将不同版本的数据存储为 Redis 里有序集合的不同 score 的元素，
 当查询缓存时，总是返回 score 最大的元素，
-我们再来演示一下上述场景，看看`ScoredRedisCache`是如何避免返回脏数据的：
+我们再来演示一下上述场景，看看`ScoredRedisCache`是如何避免返回脏数据的
+(参见项目 `spring-cache-redis-scored-example-spring-cache-redis-scored`)：
 
-1. 缓存刚好失效；
-2. 请求 A 查询持久层，得到一个旧值（版本 1）；
-3. 请求 B 将新值（版本 2）写入持久层；
-4. **请求 B 将新值写入缓存（版本 2），score 为 2；**
-5. 请求 A 将查询到的旧值（版本 1）添加到缓存，score 为 1；
+1. 缓存刚好失效。
+2. 请求 A 查询持久层，得到一个旧值（版本 1）。
+3. 请求 B 将新值（版本 2）写入持久层。
+4. **请求 B 将新值写入缓存（版本 2），score 为 2。**
+5. 请求 A 将查询到的旧值（版本 1）添加到缓存，score 为 1。
 
 现在我们在缓存中有两个版本的数据，
 版本 1 存储为 score = 1，版本 2 存储为 score = 2。

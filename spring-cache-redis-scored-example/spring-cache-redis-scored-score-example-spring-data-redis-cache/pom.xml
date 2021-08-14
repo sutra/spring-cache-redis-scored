@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
+		<artifactId>spring-cache-redis-scored-example</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>spring-cache-redis-scored-example-spring-data-redis-cache</artifactId>
+	<name>Spring Cache Redis Scored Example: Spring Data Redis Cache</name>
+	<description>
+		Demonstration of stale data returned using RedisCache
+		in Spring Data Redis.
+
+		This project is copied from https://github.com/spring-guides/gs-caching
+		and revised.
+	</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+	</dependencies>
+</project>

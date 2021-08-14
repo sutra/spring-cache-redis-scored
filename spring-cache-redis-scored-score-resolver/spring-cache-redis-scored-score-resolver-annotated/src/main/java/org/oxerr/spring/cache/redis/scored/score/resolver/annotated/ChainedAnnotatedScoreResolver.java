@@ -41,7 +41,7 @@ public class ChainedAnnotatedScoreResolver implements ScoreResolver {
 			Class<? extends Annotation> annotationType = getAnnotationType(className);
 			return new AnnotatedScoreResolver(annotationType);
 		} catch (ClassNotFoundException e) {
-			log.warn(e.getMessage());
+			log.info("Class not found: {}", e.getMessage());
 			return null;
 		}
 	}
