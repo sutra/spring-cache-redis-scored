@@ -1,5 +1,5 @@
 ## 关于 Spring Cache Redis Scored
-使用 Redis 有序集合存储的 Spring 缓存实现，可避免缓存查询时返回脏数据。
+使用 Redis 有序集合实现的 Spring 缓存，可避免缓存查询时返回脏数据。
 
 ### 如何使用
 
@@ -32,7 +32,7 @@ public class Book {
 }
 ```
 
-#### Use Spring cache annotations to cache data
+#### 使用 Spring 缓存注解来缓存数据
 ```java
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -41,7 +41,7 @@ import org.springframework.cache.annotation.Cacheable;
 public Book getByIsbn(String isbn) {
 	Book book = getByIsbnFromPersistence(isbn);
 
-	// 一些比较耗时的操作
+	// 在这里可能有一些比较耗时的操作。
 
 	return book;
 }
@@ -52,7 +52,8 @@ public Book getByIsbn(String isbn) {
 @CachePut(value = "books", key = "#result.getIsbn()")
 public Book save(Book book) {
 
-	// 可以使用数据库行记录锁或者乐观锁，来确保 book.version 字段在并发请求的情况下安全地递增。
+	// 可以使用数据库行记录锁或者乐观锁，
+	// 来确保 book.version 字段在并发请求的情况下安全地递增。
 
 	return saveToPersistence(isbn);
 }
