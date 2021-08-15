@@ -20,6 +20,7 @@
 	<modules>
 		<module>spring-cache-redis-scored-score-example-spring-data-redis-cache</module>
 		<module>spring-cache-redis-scored-score-example-spring-cache-redis-scored</module>
+		<module>spring-cache-redis-scored-score-example-helloworld</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

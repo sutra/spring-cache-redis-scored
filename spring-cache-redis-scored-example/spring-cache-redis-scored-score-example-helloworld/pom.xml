@@ -11,11 +11,10 @@
 		<artifactId>spring-cache-redis-scored-example</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>spring-cache-redis-scored-example-spring-cache-redis-scored</artifactId>
-	<name>Spring Cache Redis Scored Example: Spring Cache Redis Scored</name>
+	<artifactId>spring-cache-redis-scored-example-helleworld</artifactId>
+	<name>Spring Cache Redis Scored Example: Hello World</name>
 	<description>
-		Demonstration of how Spring Cache Redis Scored
-		prevents returning stale data.
+		Demonstration of how to use Spring Cache Redis Scored.
 	</description>
 	<build>
 		<plugins>
@@ -26,6 +25,10 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
