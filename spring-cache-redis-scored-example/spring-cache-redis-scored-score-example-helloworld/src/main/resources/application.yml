@@ -1,7 +1,0 @@
-spring:
-  cache:
-    cache-names:
-    - "cache1"
-    - "cache2"
-    redis:
-      time-to-live: "11m"
