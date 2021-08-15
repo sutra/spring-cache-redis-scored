@@ -19,7 +19,7 @@ class DefaultScoreResolverTest {
 
 class ScoredAccount {
 
-	@org.oxerr.spring.cache.redis.scored.score.resolver.annotation.Score
+	@org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.Score
 	private long version = 1L;
 
 }

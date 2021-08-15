@@ -1,10 +1,12 @@
 package org.oxerr.spring.cache.redis.scored.example.spring.cache.redis.scored;
 
 import java.io.Serializable;
+import java.util.Optional;
 
+import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Scored;
 import org.springframework.data.annotation.Version;
 
-public class Book implements Serializable {
+public class Book implements Serializable, Scored  {
 
 	private static final long serialVersionUID = 2021081401L;
 
@@ -42,6 +44,11 @@ public class Book implements Serializable {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	@Override
+	public Double getScore() {
+		return Optional.ofNullable(getVersion()).map(Long::doubleValue).orElse(null);
 	}
 
 	@Override

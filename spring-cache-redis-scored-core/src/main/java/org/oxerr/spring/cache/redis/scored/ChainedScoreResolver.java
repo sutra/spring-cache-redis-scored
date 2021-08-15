@@ -1,7 +1,7 @@
 package org.oxerr.spring.cache.redis.scored;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -10,7 +10,7 @@ import org.springframework.lang.Nullable;
 
 public class ChainedScoreResolver implements ScoreResolver {
 
-	private final Collection<ScoreResolver> resolvers;
+	private final List<ScoreResolver> resolvers;
 
 	public ChainedScoreResolver(ScoreResolver... resolvers) {
 		this(Arrays.stream(resolvers).collect(Collectors.toList()));
@@ -20,7 +20,7 @@ public class ChainedScoreResolver implements ScoreResolver {
 		this(StreamSupport.stream(resolvers.spliterator(), false).collect(Collectors.toList()));
 	}
 
-	private ChainedScoreResolver(Collection<ScoreResolver> resolvers) {
+	private ChainedScoreResolver(List<ScoreResolver> resolvers) {
 		this.resolvers = resolvers;
 	}
 

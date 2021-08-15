@@ -27,8 +27,13 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.oxerr.spring.cache.redis.scored</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-score-resolver-inherited-inheritable</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

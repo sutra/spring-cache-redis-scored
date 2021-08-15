@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.oxerr.spring.cache.redis.scored.ScoredRedisCacheManager;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
 class ScoredRedisCacheAutoConfigurationTest {
 
@@ -16,9 +16,9 @@ class ScoredRedisCacheAutoConfigurationTest {
 	@Test
 	void test() {
 		this.contextRunner
-			.withBean(JedisConnectionFactory.class)
+			.withBean(LettuceConnectionFactory.class)
 			.run(context -> {
-				assertThat(context).hasSingleBean(JedisConnectionFactory.class);
+				assertThat(context).hasSingleBean(LettuceConnectionFactory.class);
 				assertThat(context).hasSingleBean(ScoredRedisCacheManager.class);
 			});
 	}

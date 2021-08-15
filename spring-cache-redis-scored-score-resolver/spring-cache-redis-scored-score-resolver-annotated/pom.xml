@@ -12,31 +12,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-score-resolver-annotated</artifactId>
-	<name>Spring Cache Redis Scored Socre Resolver Annotated</name>
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-score-resolver-annotation</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<name>Spring Cache Redis Scored Score Resolver Annotated</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>spring-cache-redis-scored-score-resolver-annotated-annotation</module>
+		<module>spring-cache-redis-scored-score-resolver-annotated-impl</module>
+	</modules>
 </project>
