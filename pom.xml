@@ -32,6 +32,7 @@
 		<module>spring-cache-redis-scored-score-resolver</module>
 		<module>spring-cache-redis-scored-spring-boot</module>
 		<module>spring-cache-redis-scored-coverage</module>
+		<module>spring-cache-redis-scored-jmh</module>
 		<module>spring-cache-redis-scored-example</module>
 	</modules>
 	<build>
