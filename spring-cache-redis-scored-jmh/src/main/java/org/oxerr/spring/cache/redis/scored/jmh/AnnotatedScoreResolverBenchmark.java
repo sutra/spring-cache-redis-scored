@@ -3,7 +3,6 @@ package org.oxerr.spring.cache.redis.scored.jmh;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
-import org.oxerr.spring.cache.redis.scored.example.spring.cache.redis.scored.Book;
 import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.AnnotatedScoreResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
