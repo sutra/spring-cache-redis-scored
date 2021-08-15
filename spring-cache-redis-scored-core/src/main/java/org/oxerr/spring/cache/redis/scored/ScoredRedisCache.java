@@ -19,25 +19,9 @@ public class ScoredRedisCache extends RedisCache {
 	}
 
 	@Override
-	public void put(Object key, @Nullable Object value) {
+	protected Object preProcessCacheValue(Object value) {
 		this.setScore(value);
-
-		try {
-			super.put(key, value);
-		} finally {
-			ScoreHolder.remove();
-		}
-	}
-
-	@Override
-	public ValueWrapper putIfAbsent(Object key, @Nullable Object value) {
-		this.setScore(value);
-
-		try {
-			return super.putIfAbsent(key, value);
-		} finally {
-			ScoreHolder.remove();
-		}
+		return super.preProcessCacheValue(value);
 	}
 
 	private void setScore(@Nullable Object value) {
