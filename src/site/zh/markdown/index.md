@@ -15,7 +15,7 @@
 #### 使用注解标记缓存数据类里的版本字段或方法，以便 ScoreResolver 从中获取值
 
 ```java
-import org.oxerr.spring.cache.redis.scored.score.resolver.annotation.Score;
+import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.Score;
 // import javax.persistence.Version;
 // import org.springframework.data.annotation.Version;
 

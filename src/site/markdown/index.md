@@ -16,7 +16,7 @@ to prevent returning stale data in cache querying.
 #### Mark your cached data class with supported annotation for ScoreResolver
 
 ```java
-import org.oxerr.spring.cache.redis.scored.score.resolver.annotation.Score;
+import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.Score;
 // import javax.persistence.Version;
 // import org.springframework.data.annotation.Version;
 
