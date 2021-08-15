@@ -1,8 +1,8 @@
-package org.oxerr.spring.cache.redis.scored.score.resolver.inherited.impl;
+package org.oxerr.spring.cache.redis.scored.score.resolver.inherited;
 
 import java.util.Optional;
 
-import org.oxerr.spring.cache.redis.scored.ScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
 import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Scored;
 
 public class InheritedScoreResolver implements ScoreResolver {

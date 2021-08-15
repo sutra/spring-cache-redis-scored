@@ -1,4 +1,4 @@
-package org.oxerr.spring.cache.redis.scored.score.resolver.annotated.impl;
+package org.oxerr.spring.cache.redis.scored.score.resolver.annotated;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -7,15 +7,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.oxerr.spring.cache.redis.scored.ChainedScoreResolver;
-import org.oxerr.spring.cache.redis.scored.ScoreResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.chained.ChainedScoreResolver;
 import org.springframework.lang.Nullable;
 
 public class ChainedAnnotatedScoreResolver implements ScoreResolver {
-
-	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private final ChainedScoreResolver chainedScoreResolver;
 
@@ -41,7 +37,6 @@ public class ChainedAnnotatedScoreResolver implements ScoreResolver {
 			Class<? extends Annotation> annotationType = getAnnotationType(className);
 			return new AnnotatedScoreResolver(annotationType);
 		} catch (ClassNotFoundException e) {
-			log.info("Class not found: {}", e.getMessage());
 			return null;
 		}
 	}

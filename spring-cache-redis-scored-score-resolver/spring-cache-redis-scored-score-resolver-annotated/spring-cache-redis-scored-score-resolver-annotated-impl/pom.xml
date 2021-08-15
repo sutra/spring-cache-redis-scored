@@ -29,7 +29,12 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-core</artifactId>
+			<artifactId>spring-cache-redis-scored-score-resolver-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-score-resolver-chained</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

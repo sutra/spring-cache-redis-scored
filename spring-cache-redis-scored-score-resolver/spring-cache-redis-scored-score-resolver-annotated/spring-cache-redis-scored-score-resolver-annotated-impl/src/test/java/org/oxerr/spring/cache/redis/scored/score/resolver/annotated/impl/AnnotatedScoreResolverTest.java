@@ -3,6 +3,7 @@ package org.oxerr.spring.cache.redis.scored.score.resolver.annotated.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.AnnotatedScoreResolver;
 import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.Score;
 
 class AnnotatedScoreResolverTest {

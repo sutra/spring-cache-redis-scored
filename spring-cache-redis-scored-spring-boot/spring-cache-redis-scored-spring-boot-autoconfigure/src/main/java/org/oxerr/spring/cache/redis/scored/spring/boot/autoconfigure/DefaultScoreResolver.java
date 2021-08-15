@@ -2,10 +2,10 @@ package org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure;
 
 import java.util.Optional;
 
-import org.oxerr.spring.cache.redis.scored.ChainedScoreResolver;
-import org.oxerr.spring.cache.redis.scored.ScoreResolver;
-import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.impl.ChainedAnnotatedScoreResolver;
-import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.impl.InheritedScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.ChainedAnnotatedScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.chained.ChainedScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.InheritedScoreResolver;
 import org.springframework.lang.Nullable;
 
 public class DefaultScoreResolver implements ScoreResolver {

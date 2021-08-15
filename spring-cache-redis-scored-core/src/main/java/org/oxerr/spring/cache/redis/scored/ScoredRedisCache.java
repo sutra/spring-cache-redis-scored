@@ -1,5 +1,6 @@
 package org.oxerr.spring.cache.redis.scored;
 
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.lang.Nullable;
 

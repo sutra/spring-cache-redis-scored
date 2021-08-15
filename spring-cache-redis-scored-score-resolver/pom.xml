@@ -15,6 +15,8 @@
 	<name>Spring Cache Redis Scored Score Resolver</name>
 	<packaging>pom</packaging>
 	<modules>
+		<module>spring-cache-redis-scored-score-resolver-core</module>
+		<module>spring-cache-redis-scored-score-resolver-chained</module>
 		<module>spring-cache-redis-scored-score-resolver-annotated</module>
 		<module>spring-cache-redis-scored-score-resolver-inherited</module>
 	</modules>

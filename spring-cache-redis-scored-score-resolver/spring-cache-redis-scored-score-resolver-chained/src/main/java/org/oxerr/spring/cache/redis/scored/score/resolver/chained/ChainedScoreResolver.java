@@ -1,4 +1,4 @@
-package org.oxerr.spring.cache.redis.scored;
+package org.oxerr.spring.cache.redis.scored.score.resolver.chained;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.lang.Nullable;
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
 
 public class ChainedScoreResolver implements ScoreResolver {
 
@@ -25,7 +25,7 @@ public class ChainedScoreResolver implements ScoreResolver {
 	}
 
 	@Override
-	public Optional<Double> resolveScore(@Nullable Object value) {
+	public Optional<Double> resolveScore(Object value) {
 		Optional<Double> score;
 
 		for (ScoreResolver scoreResolver : this.resolvers) {
