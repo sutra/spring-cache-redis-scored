@@ -34,7 +34,7 @@ public class InheritedScoreResolverBenchmark {
 			benchmark.testResolveScore();
 			long elapsedNanos = System.nanoTime() - startTime;
 
-			log.info("elapsedNanos: {}", elapsedNanos);
+			log.info("Elapsed nanos: {}", elapsedNanos);
 		}
 	}
 

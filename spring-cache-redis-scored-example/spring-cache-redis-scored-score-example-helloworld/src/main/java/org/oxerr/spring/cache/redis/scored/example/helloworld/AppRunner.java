@@ -2,60 +2,106 @@ package org.oxerr.spring.cache.redis.scored.example.helloworld;
 
 import java.time.Duration;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.cache.CacheStatistics;
+import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AppRunner implements CommandLineRunner {
 
-	private static final Logger logger = LoggerFactory.getLogger(AppRunner.class);
+	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 
-	private final Cache cache;
+	private final RedisCache cache;
 
 	private final BookRepository bookRepository;
 
 	public AppRunner(CacheManager cacheManager, BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
 
-		this.cache = cacheManager.getCache("books");
+		this.cache = (RedisCache) cacheManager.getCache("books");
 
 		if (this.cache == null) {
 			throw new IllegalArgumentException("Cache books should not be null.");
 		}
 
-		logger.info("Cache type: {}", this.cache.getClass());
-		logger.info("Native cache: {}", this.cache.getNativeCache());
+		log.info("Cache type: {}", this.cache.getClass());
+		log.info("Native cache: {}", this.cache.getNativeCache());
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		// Clear cache before test.
-		cache.clear();
+		this.clearCache();
+		this.stat();
 
-		final Book book1234 = bookRepository.saveBook(new Book("isbn-1234", "version 1", 1L));
-		logger.info("Book1234: {}", book1234);
+		String isbn = "isbn-1234";
 
-		final Book book4567 = bookRepository.saveBook(new Book("isbn-4567", "version 1", 1L));
-		logger.info("Book4567: {}", book4567);
+		this.saveBook(isbn);
+		this.stat();
 
-		// Clear cache for test.
-		cache.clear();
+		this.fetch(isbn);
+		this.stat();
 
-		logger.info(".... Fetching books");
+		this.clearCache();
+		this.stat();
+
+		this.fetch(isbn);
+		this.stat();
+	}
+
+	private void saveBook(String isbn) {
+		this.sep(">");
+		log.info("Saving book...");
+		Book book = bookRepository.save(new Book(isbn, "version 0"));
+		log.info("Book saved: {}.", book);
+
+		for (int i = 1; i <= 3; i++) {
+			log.info("Updating book...");
+			book.setTitle("version " + i);
+			book = bookRepository.save(book);
+			log.info("Book updated: {}.", book);
+		}
+		this.sep("<");
+	}
+
+	private void fetch(String isbn) {
+		this.sep(">");
+		log.info("Fetching books...");
 		for (int i = 0; i < 3; i++) {
 			long startTime = System.nanoTime();
 
-			logger.info("isbn-1234 -->{}", bookRepository.getByIsbn("isbn-1234"));
-			logger.info("isbn-4567 -->{}", bookRepository.getByIsbn("isbn-4567"));
+			log.info("Getting book...");
+			Book book = bookRepository.getByIsbn(isbn);
+			log.info("{} -->{}", isbn, book);
 
 			long elapsedNanos = System.nanoTime() - startTime;
 
-			logger.info("elapsed: {}", Duration.ofNanos(elapsedNanos));
+			log.info("Elapsed: {}", Duration.ofNanos(elapsedNanos));
 		}
+		this.sep("<");
+	}
+
+	private void stat() {
+		this.sep(">");
+		CacheStatistics cacheStatistics = cache.getStatistics();
+		log.info("Hits: {}.", cacheStatistics.getHits());
+		log.info("Puts: {}.", cacheStatistics.getPuts());
+		this.sep("<");
+	}
+
+	private void clearCache() {
+		log.info("Clearing cache...");
+		cache.clear();
+		log.info("Cache cleared.");
+	}
+
+	private void sep(String s) {
+		log.info("{}", StringUtils.repeat(s, 80));
 	}
 
 }

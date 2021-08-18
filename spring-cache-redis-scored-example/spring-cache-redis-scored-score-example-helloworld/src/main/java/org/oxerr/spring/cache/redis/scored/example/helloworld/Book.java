@@ -1,9 +1,13 @@
 package org.oxerr.spring.cache.redis.scored.example.helloworld;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Version;
 
+@Entity
 public class Book {
 
+	@Id
 	private String isbn;
 	private String title;
 
@@ -13,10 +17,9 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(String isbn, String title, Long version) {
+	public Book(String isbn, String title) {
 		this.isbn = isbn;
 		this.title = title;
-		this.version = version;
 	}
 
 	public String getIsbn() {

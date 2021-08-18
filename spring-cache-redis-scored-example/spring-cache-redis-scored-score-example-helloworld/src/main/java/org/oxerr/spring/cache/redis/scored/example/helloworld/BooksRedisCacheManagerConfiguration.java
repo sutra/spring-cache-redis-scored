@@ -22,6 +22,7 @@ public class BooksRedisCacheManagerConfiguration {
 	@Bean
 	public RedisCacheManagerBuilderCustomizer myRedisCacheManagerBuilderCustomizer() {
 		return builder -> builder
+			.enableStatistics()
 			.withCacheConfiguration(
 				"books",
 				RedisCacheConfiguration
