@@ -63,8 +63,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 		if (version == null) {
 			final List<Field> fields = FieldUtils.getFieldsListWithAnnotation(valueType, annotationType);
 			for (final Field field : fields) {
-				field.setAccessible(true);
-				version = field.get(value);
+				version = FieldUtils.readField(field, value, true);
 
 				if (version != null) {
 					break;
