@@ -23,7 +23,7 @@ import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.S
 public class Book {
 
 	/**
-	 * Check org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure.DefaultScoreResolver
+	 * Check org.oxerr.spring.cache.redis.scored.score.resolver.DefaultScoreResolver
 	 * to see the supported annotations.
 	 */
 	@Score

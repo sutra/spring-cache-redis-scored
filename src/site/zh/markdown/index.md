@@ -22,7 +22,7 @@ import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.S
 public class Book {
 
 	/**
-	 * 查阅 org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure.DefaultScoreResolver
+	 * 查阅 org.oxerr.spring.cache.redis.scored.score.resolver.DefaultScoreResolver
 	 * 来获知支持的注解。
 	 */
 	@Score
