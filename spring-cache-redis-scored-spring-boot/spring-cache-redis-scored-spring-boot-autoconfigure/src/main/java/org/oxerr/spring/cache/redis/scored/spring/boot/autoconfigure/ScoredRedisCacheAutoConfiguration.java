@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.CacheStatisticsCollector;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager.RedisCacheManagerBuilder;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -53,15 +54,25 @@ class ScoredRedisCacheAutoConfiguration {
 			final ScoredRedisCacheWriter cacheWriter = new ScoredRedisCacheWriter(
 				connectionFactory,
 				CacheStatisticsCollector.none(),
-				scoreHolder
+				scoreHolder,
+				this.getRedisCacheWriter(builder)
 			);
 			builder.cacheWriter(cacheWriter);
 		};
 	}
 
 	private RedisCacheConfiguration getDefaultCacheConfiguration(RedisCacheManagerBuilder builder) {
+		return this.readDeclaredField(builder, "defaultCacheConfiguration");
+	}
+
+	private RedisCacheWriter getRedisCacheWriter(RedisCacheManagerBuilder builder) {
+		return this.readDeclaredField(builder, "cacheWriter");
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T readDeclaredField(RedisCacheManagerBuilder builder, String fieldName) {
 		try {
-			return (RedisCacheConfiguration) FieldUtils.readField(builder, "defaultCacheConfiguration", true);
+			return (T) FieldUtils.readDeclaredField(builder, fieldName, true);
 		} catch (IllegalAccessException e) {
 			throw new IllegalArgumentException(e);
 		}
