@@ -1,18 +1,17 @@
 package org.oxerr.spring.cache.redis.scored.example.helloworld;
 
-import java.io.Serializable;
-
 import javax.persistence.Version;
 
-public class Book implements Serializable {
-
-	private static final long serialVersionUID = 2021081401L;
+public class Book {
 
 	private String isbn;
 	private String title;
 
 	@Version
 	private Long version;
+
+	public Book() {
+	}
 
 	public Book(String isbn, String title, Long version) {
 		this.isbn = isbn;

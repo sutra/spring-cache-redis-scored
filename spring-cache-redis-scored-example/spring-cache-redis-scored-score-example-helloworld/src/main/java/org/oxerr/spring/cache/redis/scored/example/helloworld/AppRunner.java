@@ -22,6 +22,13 @@ public class AppRunner implements CommandLineRunner {
 		this.bookRepository = bookRepository;
 
 		this.cache = cacheManager.getCache("books");
+
+		if (this.cache == null) {
+			throw new IllegalArgumentException("Cache books should not be null.");
+		}
+
+		logger.info("Cache type: {}", this.cache.getClass());
+		logger.info("Native cache: {}", this.cache.getNativeCache());
 	}
 
 	@Override
