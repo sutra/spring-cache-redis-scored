@@ -1,5 +1,6 @@
 package org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.oxerr.spring.cache.redis.scored.InheritableThreadLocalScoreHolder;
 import org.oxerr.spring.cache.redis.scored.ScoreHolder;
 import org.oxerr.spring.cache.redis.scored.ScoredRedisCacheWriter;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.CacheStatisticsCollector;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager.RedisCacheManagerBuilder;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -45,10 +47,8 @@ class ScoredRedisCacheAutoConfiguration {
 			final ScoredRedisSerializer scoredRedisSerializer = new ScoredRedisSerializer(serializer, scoreResolver, scoreHolder);
 			final SerializationPair<?> valueSerializationPair = SerializationPair.fromSerializer(scoredRedisSerializer);
 
-			final RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
-				.defaultCacheConfig()
-				.serializeValuesWith(valueSerializationPair);
-			builder.cacheDefaults(redisCacheConfiguration);
+			final RedisCacheConfiguration cacheDefaults = getDefaultCacheConfiguration(builder).serializeValuesWith(valueSerializationPair);
+			builder.cacheDefaults(cacheDefaults);
 
 			final ScoredRedisCacheWriter cacheWriter = new ScoredRedisCacheWriter(
 				connectionFactory,
@@ -57,6 +57,14 @@ class ScoredRedisCacheAutoConfiguration {
 			);
 			builder.cacheWriter(cacheWriter);
 		};
+	}
+
+	private RedisCacheConfiguration getDefaultCacheConfiguration(RedisCacheManagerBuilder builder) {
+		try {
+			return (RedisCacheConfiguration) FieldUtils.readField(builder, "defaultCacheConfiguration", true);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 }

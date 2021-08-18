@@ -1,0 +1,5 @@
+spring:
+  cache:
+    redis:
+      key-prefix: "spring-cache-redis-scored-example-spring-data-redis-cache::"
+      time-to-live: "10m"
