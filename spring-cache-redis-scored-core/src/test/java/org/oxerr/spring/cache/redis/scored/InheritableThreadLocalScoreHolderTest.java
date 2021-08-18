@@ -5,17 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-class ScoreHolderTest {
+class InheritableThreadLocalScoreHolderTest {
 
 	@Test
 	void test() {
+		InheritableThreadLocalScoreHolder scoreHolder = new InheritableThreadLocalScoreHolder();
 		Double score = Double.valueOf(1);
 
-		ScoreHolder.set(score);
-		assertEquals(score, ScoreHolder.get());
+		scoreHolder.set(score);
+		assertEquals(score, scoreHolder.get());
 
-		ScoreHolder.remove();
-		assertNull(ScoreHolder.get());
+		scoreHolder.remove();
+		assertNull(scoreHolder.get());
 	}
 
 }

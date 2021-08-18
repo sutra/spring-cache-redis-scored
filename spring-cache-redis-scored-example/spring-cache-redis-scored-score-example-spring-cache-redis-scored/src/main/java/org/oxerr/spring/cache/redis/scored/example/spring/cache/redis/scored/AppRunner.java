@@ -29,6 +29,7 @@ public class AppRunner implements CommandLineRunner {
 
 		logger.info(".... Testing");
 		logger.info("Cache type: {}", cache.getClass());
+		logger.info("Native cache: {}", cache.getNativeCache());
 
 		final String isbn = "isbn-1234";
 		final String key = isbn;

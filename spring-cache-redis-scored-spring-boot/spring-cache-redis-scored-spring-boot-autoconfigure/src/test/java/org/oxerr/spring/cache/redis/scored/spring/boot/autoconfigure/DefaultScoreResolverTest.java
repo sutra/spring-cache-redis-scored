@@ -3,6 +3,7 @@ package org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.oxerr.spring.cache.redis.scored.score.resolver.DefaultScoreResolver;
 
 class DefaultScoreResolverTest {
 

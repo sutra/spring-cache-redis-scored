@@ -60,7 +60,7 @@ public Book save(Book book) {
 }
 ```
 
-### What is the different to RedisCache
+### What is the different to implementation in spring-data-redis
 
 The cache [implementation](https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#redis:support:cache-abstraction) `RedisCache`,
 in [spring-data-redis](https://spring.io/projects/spring-data-redis) uses
@@ -85,7 +85,7 @@ Now we have the old data(version 1) in cache,
 and when querying from cache, the old data(version 1) will be returned,
 before the cache entry is expired or evicted.
 
-But `ScoredRedisCache` uses
+But `ScoredRedisCacheWriter` uses
 [`zAdd`](https://redis.io/commands/zadd),
 [`zRevRangeByScore`](https://redis.io/commands/zrevrangebyscore)
 and [`zRemRangeByScore`](https://redis.io/commands/zremrangebyscore),
@@ -93,7 +93,7 @@ commands to set/get cache entries
 (see `org.oxerr.spring.cache.redis.scored.ScoredRedisCacheWriter`),
 this saves versioned data as sorted set in Redis with different scores,
 and always returns the newest versioned data, lets replay the above scenario,
-to demonstrate how `ScoredRedisCache` prevents stale data
+to demonstrate how spring-cache-redis-scored prevents stale data
 (see project `spring-cache-redis-scored-example-spring-cache-redis-scored`):
 
 1. The cached data is expired.

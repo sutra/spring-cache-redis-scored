@@ -19,5 +19,6 @@
 		<module>spring-cache-redis-scored-score-resolver-chained</module>
 		<module>spring-cache-redis-scored-score-resolver-annotated</module>
 		<module>spring-cache-redis-scored-score-resolver-inherited</module>
+		<module>spring-cache-redis-scored-score-resolver-default</module>
 	</modules>
 </project>

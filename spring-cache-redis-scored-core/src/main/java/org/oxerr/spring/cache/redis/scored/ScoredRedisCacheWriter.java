@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.Optional;
 import java.util.function.Function;
 
-//import org.springframework.data.redis.cache.BatchStrategy;
 import org.springframework.data.redis.cache.CacheStatistics;
 import org.springframework.data.redis.cache.CacheStatisticsCollector;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -13,6 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisZSetCommands.Limit;
 import org.springframework.data.redis.connection.RedisZSetCommands.Range;
 import org.springframework.data.redis.connection.RedisZSetCommands.ZAddArgs;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
@@ -26,33 +26,55 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 
 	private static final String OK = "OK";
 
-	private static final Double DEFAULT_SCORE = Double.valueOf(0);
+	private static final Double DEFAULT_SCORE = Double.valueOf(0d);
 
-	private final RedisCacheWriter redisCacheWriter;
 	private final RedisConnectionFactory connectionFactory;
 	private final CacheStatisticsCollector statistics;
+	private final ScoreHolder scoreHolder;
+	private final RedisCacheWriter cacheWriter;
 
-	/**
-	 * @param connectionFactory must not be {@literal null}.
-	 */
-	public ScoredRedisCacheWriter(RedisConnectionFactory connectionFactory) {
+	public ScoredRedisCacheWriter(
+		@NonNull RedisConnectionFactory connectionFactory
+	) {
 		this(connectionFactory, CacheStatisticsCollector.none());
 	}
 
-	/**
-	 * @param connectionFactory must not be {@literal null}.
-	 * @param cacheStatisticsCollector must not be {@literal null}.
-	 */
 	public ScoredRedisCacheWriter(
-		RedisConnectionFactory connectionFactory,
-		CacheStatisticsCollector cacheStatisticsCollector
+		@NonNull RedisConnectionFactory connectionFactory,
+		@NonNull CacheStatisticsCollector cacheStatisticsCollector
+	) {
+		this(
+			connectionFactory,
+			cacheStatisticsCollector,
+			new InheritableThreadLocalScoreHolder()
+		);
+	}
+
+	public ScoredRedisCacheWriter(
+		@NonNull RedisConnectionFactory connectionFactory,
+		@NonNull CacheStatisticsCollector cacheStatisticsCollector,
+		@NonNull ScoreHolder scoreHolder
+	) {
+		this(
+			connectionFactory,
+			cacheStatisticsCollector,
+			scoreHolder,
+			RedisCacheWriter
+				.nonLockingRedisCacheWriter(connectionFactory)
+				.withStatisticsCollector(cacheStatisticsCollector)
+		);
+	}
+
+	public ScoredRedisCacheWriter(
+		@NonNull RedisConnectionFactory connectionFactory,
+		@NonNull CacheStatisticsCollector cacheStatisticsCollector,
+		@NonNull ScoreHolder scoreHolder,
+		@NonNull RedisCacheWriter cacheWriter
 	) {
 		this.connectionFactory = connectionFactory;
 		this.statistics = cacheStatisticsCollector;
-
-		this.redisCacheWriter = RedisCacheWriter
-			.nonLockingRedisCacheWriter(connectionFactory)
-			.withStatisticsCollector(cacheStatisticsCollector);
+		this.scoreHolder = scoreHolder;
+		this.cacheWriter = cacheWriter;
 	}
 
 	@Override
@@ -66,7 +88,7 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 		Assert.notNull(key, KEY_NOT_NULL);
 		Assert.notNull(value, VALUE_NOT_NULL);
 
-		final Double score = getScore();
+		final double score = getScore();
 
 		final long millis = ttl.toMillis();
 		final Range range = Range.range().lt(score);
@@ -116,7 +138,7 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 		Assert.notNull(key, KEY_NOT_NULL);
 		Assert.notNull(value, VALUE_NOT_NULL);
 
-		final Double score = getScore();
+		final double score = getScore();
 
 		final long millis = ttl.toMillis();
 		final Range range = Range.range().lt(score);
@@ -144,12 +166,12 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 
 	@Override
 	public void remove(String name, byte[] key) {
-		this.redisCacheWriter.remove(name, key);
+		this.cacheWriter.remove(name, key);
 	}
 
 	@Override
 	public void clean(String name, byte[] pattern) {
-		this.redisCacheWriter.clean(name, pattern);
+		this.cacheWriter.clean(name, pattern);
 	}
 
 	@Override
@@ -158,7 +180,7 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 	}
 
 	@Override
-	public RedisCacheWriter withStatisticsCollector(CacheStatisticsCollector cacheStatisticsCollector) {
+	public ScoredRedisCacheWriter withStatisticsCollector(CacheStatisticsCollector cacheStatisticsCollector) {
 		return new ScoredRedisCacheWriter(connectionFactory, cacheStatisticsCollector);
 	}
 
@@ -172,8 +194,9 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 		return ttl != null && !ttl.isZero() && !ttl.isNegative();
 	}
 
-	private static double getScore() {
-		final Double score = Optional.ofNullable(ScoreHolder.get()).orElse(DEFAULT_SCORE);
+	private double getScore() {
+		final Double score = Optional.ofNullable(this.scoreHolder.get())
+			.orElse(DEFAULT_SCORE);
 		return score.doubleValue();
 	}
 
