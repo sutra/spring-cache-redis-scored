@@ -1,6 +1,7 @@
 package org.oxerr.spring.cache.redis.scored.score.resolver.annotated;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,6 +13,8 @@ import java.util.Optional;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -51,26 +54,68 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 		Object version = null;
 
 		final List<Method> methods = MethodUtils.getMethodsListWithAnnotation(valueType, annotationType, true, true);
-		for (final Method method : methods) {
-			method.setAccessible(true);
-			version = method.invoke(value);
-			if (version != null) {
-				break;
+
+		if (!methods.isEmpty()) {
+			final Method method;
+			if (methods.size() == 1) {
+				method = methods.get(0);
+			} else {
+				method = methods.stream()
+					.map(OrderedAnnotatedElement::new)
+					.sorted((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
+					.findFirst()
+					.map(OrderedAnnotatedElement::getAnnotatedElement)
+					.orElseThrow(IllegalArgumentException::new);
 			}
-		}
-
-		if (version == null) {
+			version = this.invokeMethod(method, value);
+		} else {
 			final List<Field> fields = FieldUtils.getFieldsListWithAnnotation(valueType, annotationType);
-			for (final Field field : fields) {
-				version = FieldUtils.readField(field, value, true);
-
-				if (version != null) {
-					break;
+			if (!fields.isEmpty()) {
+				final Field field;
+				if (fields.size() == 1) {
+					field = fields.get(0);
+				} else {
+					field = fields.stream()
+						.map(OrderedAnnotatedElement::new)
+						.sorted((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
+						.findFirst()
+						.map(OrderedAnnotatedElement::getAnnotatedElement)
+						.orElseThrow(IllegalArgumentException::new);
 				}
+				version = FieldUtils.readField(field, value, true);
 			}
 		}
 
 		return Optional.ofNullable(extractScore(version));
+	}
+
+	private class OrderedAnnotatedElement<T extends AnnotatedElement> implements Ordered {
+
+		private final T annotatedElement;
+		private final int order;
+
+		public OrderedAnnotatedElement(T annotatedElement) {
+			this.annotatedElement = annotatedElement;
+			this.order = Optional.ofNullable(annotatedElement.getAnnotation(Order.class))
+				.map(Order::value)
+				.orElse(Ordered.LOWEST_PRECEDENCE);
+		}
+
+		public T getAnnotatedElement() {
+			return annotatedElement;
+		}
+
+		@Override
+		public int getOrder() {
+			return order;
+		}
+
+	}
+
+	private Object invokeMethod(Method method, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+		method.setAccessible(true);
+		return method.invoke(value);
 	}
 
 	private Double extractScore(Object version) {
