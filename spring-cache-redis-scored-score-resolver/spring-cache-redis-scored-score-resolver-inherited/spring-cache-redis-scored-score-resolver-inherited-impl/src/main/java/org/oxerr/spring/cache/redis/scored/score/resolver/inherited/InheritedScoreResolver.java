@@ -9,15 +9,15 @@ public class InheritedScoreResolver implements ScoreResolver {
 
 	@Override
 	public Optional<Double> resolveScore(Object value) {
-		final Double score;
+		final Optional<Double> score;
 
 		if (value instanceof Scored) {
-			score = ((Scored) value).getScore();
+			score = Optional.ofNullable(((Scored) value).getScore());
 		} else {
-			score = null;
+			score = Optional.empty();
 		}
 
-		return Optional.ofNullable(score);
+		return score;
 	}
 
 }

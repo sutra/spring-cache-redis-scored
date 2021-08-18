@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -82,7 +81,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 		} else if (version instanceof Number) {
 			Number number = (Number) version;
 			score = number.doubleValue();
-		} else if (version instanceof Date) {
+		} else if (version instanceof Timestamp) {
 			Timestamp timestamp = (Timestamp) version;
 			long millis = timestamp.getTime();
 			int nanos = timestamp.getNanos();

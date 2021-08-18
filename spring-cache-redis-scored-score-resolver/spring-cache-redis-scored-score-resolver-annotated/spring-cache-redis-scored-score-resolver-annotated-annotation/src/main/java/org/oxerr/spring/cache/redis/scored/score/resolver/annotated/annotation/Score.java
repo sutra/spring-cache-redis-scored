@@ -6,8 +6,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 
 /**
  * Specifies the score field or property.
@@ -17,7 +17,7 @@ import java.util.Date;
  * </p>
  * <ul>
  * <li>{@link Number}</li>
- * <li>{@link Date}</li>
+ * <li>{@link Timestamp}</li>
  * <li>{@link Instant}</li>
  * </ul>
  *
