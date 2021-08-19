@@ -5,14 +5,13 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
+import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.lang.NonNull;
@@ -118,29 +117,8 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 		return method.invoke(value);
 	}
 
-	private Double extractScore(Object version) {
-		final Double score;
-
-		if (version == null) {
-			score = null;
-		} else if (version instanceof Number) {
-			Number number = (Number) version;
-			score = number.doubleValue();
-		} else if (version instanceof Timestamp) {
-			Timestamp timestamp = (Timestamp) version;
-			long millis = timestamp.getTime();
-			int nanos = timestamp.getNanos();
-			score = Double.parseDouble(String.format("%d.%d", millis, nanos));
-		} else if (version instanceof Instant) {
-			Instant instant = (Instant) version;
-			long millis = instant.toEpochMilli();
-			int nanos = instant.getNano();
-			score = Double.parseDouble(String.format("%d.%d", millis, nanos));
-		} else {
-			throw new IllegalArgumentException("Unsupported type: " + version.getClass());
-		}
-
-		return score;
+	protected Double extractScore(Object version) {
+		return ScoreUtils.extractScore(version);
 	}
 
 }

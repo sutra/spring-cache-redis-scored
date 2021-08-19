@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Scored;
+import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Versioned;
 
 class InheritedScoreResolverTest {
 
@@ -13,17 +13,17 @@ class InheritedScoreResolverTest {
 
 	@Test
 	void testResolveScore() {
-		assertEquals(123d, this.scoreResolver.resolveScore(new Book()).get());
+		assertEquals(123L, this.scoreResolver.resolveScore(new Book()).get());
 		assertEquals(Optional.empty(), this.scoreResolver.resolveScore(new Object()));
 	}
 
 }
 
-class Book implements Scored {
+class Book implements Versioned<Long> {
 
 	@Override
-	public Double getScore() {
-		return 123d;
+	public Long getVersion() {
+		return 123L;
 	}
 
 }

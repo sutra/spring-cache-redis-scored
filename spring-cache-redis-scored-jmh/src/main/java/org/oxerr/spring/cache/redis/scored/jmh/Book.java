@@ -1,12 +1,11 @@
 package org.oxerr.spring.cache.redis.scored.jmh;
 
 import java.io.Serializable;
-import java.util.Optional;
 
-import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Scored;
+import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.Versioned;
 import org.springframework.data.annotation.Version;
 
-public class Book implements Serializable, Scored {
+public class Book implements Serializable, Versioned<Long> {
 
 	private static final long serialVersionUID = 2021081401L;
 
@@ -38,6 +37,7 @@ public class Book implements Serializable, Scored {
 		this.title = title;
 	}
 
+	@Override
 	public Long getVersion() {
 		return version;
 	}
@@ -47,13 +47,8 @@ public class Book implements Serializable, Scored {
 	}
 
 	@Override
-	public Double getScore() {
-		return Optional.ofNullable(getVersion()).map(Long::doubleValue).orElse(null);
-	}
-
-	@Override
 	public String toString() {
-		return "Book{" + "isbn='" + isbn + '\'' + ", title='" + title + '\'' + ", version=" + version + '}';
+		return String.format("Book{isbn='%s', title='%s', version=%d}", isbn, title, version);
 	}
 
 }
