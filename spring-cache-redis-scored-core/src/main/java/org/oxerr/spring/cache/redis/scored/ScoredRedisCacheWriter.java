@@ -16,6 +16,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+/**
+ * {@link RedisCacheWriter} implementation using sorted set as back-end store.
+ */
 public class ScoredRedisCacheWriter implements RedisCacheWriter {
 
 	private static final String MUST_NOT_BE_NULL = " must not be null!";

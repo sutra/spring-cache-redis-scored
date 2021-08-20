@@ -8,6 +8,12 @@ import org.springframework.cache.interceptor.CacheInterceptor;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+/**
+ * Resolves the score of the caching value by the {@link ScoreResolver},
+ * and stores to the {@link ScoreHolder},
+ * and then the {@link ScoredRedisCacheWriter} could read the score
+ * from the {@link ScoreHolder}
+ */
 public class ScoredRedisCacheInterceptor extends CacheInterceptor {
 
 	private static final long serialVersionUID = 2021082001L;
