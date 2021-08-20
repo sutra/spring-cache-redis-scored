@@ -8,6 +8,8 @@ import org.oxerr.spring.cache.redis.scored.score.resolver.inherited.inheritable.
 
 public class InheritedScoreResolver implements ScoreResolver {
 
+	private static final long serialVersionUID = 2021082001L;
+
 	@Override
 	public Optional<Double> resolveScore(Object value) {
 		final Optional<Double> score;

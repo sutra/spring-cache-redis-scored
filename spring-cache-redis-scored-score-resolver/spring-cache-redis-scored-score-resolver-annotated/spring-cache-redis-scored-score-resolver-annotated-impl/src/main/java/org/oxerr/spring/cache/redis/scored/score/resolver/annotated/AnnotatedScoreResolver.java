@@ -19,6 +19,8 @@ import org.springframework.lang.Nullable;
 
 public class AnnotatedScoreResolver implements ScoreResolver {
 
+	private static final long serialVersionUID = 2021082001L;
+
 	private final Class<? extends Annotation> annotationType;
 
 	public AnnotatedScoreResolver(Class<? extends Annotation> annotationType) {

@@ -10,6 +10,8 @@ import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
 
 public class ChainedScoreResolver implements ScoreResolver {
 
+	private static final long serialVersionUID = 2021082001L;
+
 	private final List<ScoreResolver> resolvers;
 
 	public ChainedScoreResolver(ScoreResolver... resolvers) {

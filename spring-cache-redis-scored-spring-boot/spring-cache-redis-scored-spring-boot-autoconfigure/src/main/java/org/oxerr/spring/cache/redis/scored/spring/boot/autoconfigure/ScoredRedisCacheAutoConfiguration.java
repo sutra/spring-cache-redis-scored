@@ -3,23 +3,22 @@ package org.oxerr.spring.cache.redis.scored.spring.boot.autoconfigure;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.oxerr.spring.cache.redis.scored.InheritableThreadLocalScoreHolder;
 import org.oxerr.spring.cache.redis.scored.ScoreHolder;
+import org.oxerr.spring.cache.redis.scored.ScoredRedisCacheInterceptor;
 import org.oxerr.spring.cache.redis.scored.ScoredRedisCacheWriter;
 import org.oxerr.spring.cache.redis.scored.score.resolver.DefaultScoreResolver;
 import org.oxerr.spring.cache.redis.scored.score.resolver.ScoreResolver;
-import org.oxerr.spring.cache.redis.scored.serializer.ScoredRedisSerializer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.cache.interceptor.BeanFactoryCacheOperationSourceAdvisor;
+import org.springframework.cache.interceptor.CacheOperationSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.CacheStatisticsCollector;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager.RedisCacheManagerBuilder;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -31,26 +30,17 @@ import org.springframework.lang.Nullable;
  * </a>
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(ScoredRedisSerializer.class)
+@ConditionalOnClass({ ScoredRedisCacheInterceptor.class, ScoredRedisCacheWriter.class })
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 class ScoredRedisCacheAutoConfiguration {
 
 	@Bean
 	public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(
-		@NonNull RedisConnectionFactory connectionFactory,
-		@Nullable ClassLoader classLoader
+		@NonNull final RedisConnectionFactory connectionFactory,
+		@NonNull final ScoreHolder scoreHolder,
+		@Nullable final ClassLoader classLoader
 	) {
 		return builder -> {
-			final ScoreResolver scoreResolver = new DefaultScoreResolver();
-			final ScoreHolder scoreHolder = new InheritableThreadLocalScoreHolder();
-
-			final RedisSerializer<Object> serializer = RedisSerializer.java(classLoader);
-			final ScoredRedisSerializer scoredRedisSerializer = new ScoredRedisSerializer(serializer, scoreResolver, scoreHolder);
-			final SerializationPair<?> valueSerializationPair = SerializationPair.fromSerializer(scoredRedisSerializer);
-
-			final RedisCacheConfiguration cacheDefaults = getDefaultCacheConfiguration(builder).serializeValuesWith(valueSerializationPair);
-			builder.cacheDefaults(cacheDefaults);
-
 			final ScoredRedisCacheWriter cacheWriter = new ScoredRedisCacheWriter(
 				connectionFactory,
 				CacheStatisticsCollector.none(),
@@ -61,8 +51,25 @@ class ScoredRedisCacheAutoConfiguration {
 		};
 	}
 
-	private RedisCacheConfiguration getDefaultCacheConfiguration(RedisCacheManagerBuilder builder) {
-		return this.readDeclaredField(builder, "defaultCacheConfiguration");
+	@Bean
+	public ScoredRedisCacheInterceptor scoredRedisCacheInterceptor(
+		final BeanFactoryCacheOperationSourceAdvisor cacheOperationSourceAdvisor,
+		final CacheOperationSource cacheOperationSource,
+		final ScoreHolder scoreHolder
+	) {
+		final ScoreResolver scoreResolver = new DefaultScoreResolver();
+
+		final ScoredRedisCacheInterceptor scoredRedisCacheInterceptor = new ScoredRedisCacheInterceptor(scoreResolver, scoreHolder);
+		scoredRedisCacheInterceptor.setCacheOperationSource(cacheOperationSource);
+
+		cacheOperationSourceAdvisor.setAdvice(scoredRedisCacheInterceptor);
+
+		return scoredRedisCacheInterceptor;
+	}
+
+	@Bean
+	public ScoreHolder scoreHolder() {
+		return new InheritableThreadLocalScoreHolder();
 	}
 
 	private RedisCacheWriter getRedisCacheWriter(RedisCacheManagerBuilder builder) {

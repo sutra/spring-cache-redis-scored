@@ -1,9 +1,10 @@
 package org.oxerr.spring.cache.redis.scored.score.resolver;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface ScoreResolver {
+public interface ScoreResolver extends Serializable {
 
 	/**
 	 * Resolve score from the value.

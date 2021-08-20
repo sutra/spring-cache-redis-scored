@@ -1,6 +1,8 @@
 package org.oxerr.spring.cache.redis.scored;
 
-public interface ScoreHolder {
+import java.io.Serializable;
+
+public interface ScoreHolder extends Serializable {
 
 	Double get();
 

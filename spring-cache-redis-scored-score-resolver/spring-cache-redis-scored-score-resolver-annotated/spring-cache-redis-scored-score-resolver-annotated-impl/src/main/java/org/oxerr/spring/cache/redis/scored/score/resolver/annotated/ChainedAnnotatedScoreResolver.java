@@ -13,6 +13,8 @@ import org.springframework.lang.Nullable;
 
 public class ChainedAnnotatedScoreResolver implements ScoreResolver {
 
+	private static final long serialVersionUID = 2021082001L;
+
 	private final ChainedScoreResolver chainedScoreResolver;
 
 	public ChainedAnnotatedScoreResolver(String... annotationTypes) {
