@@ -1,5 +1,8 @@
 package org.oxerr.spring.cache.redis.scored;
 
+/**
+ * Score holder implementation using {@link InheritableThreadLocal}.
+ */
 public class InheritableThreadLocalScoreHolder implements ScoreHolder {
 
 	private static final long serialVersionUID = 2021082001L;
