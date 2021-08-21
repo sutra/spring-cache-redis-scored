@@ -1,13 +1,19 @@
 package org.oxerr.spring.cache.redis.scored.score.resolver.annotated.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.Test;
 import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.AnnotatedScoreResolver;
 import org.oxerr.spring.cache.redis.scored.score.resolver.annotated.annotation.Score;
@@ -16,6 +22,39 @@ import org.springframework.core.annotation.Order;
 class AnnotatedScoreResolverTest {
 
 	private final AnnotatedScoreResolver scoreResolver = new AnnotatedScoreResolver(Score.class);
+
+	@Test
+	void testSerialization() throws IllegalArgumentException, IllegalAccessException {
+		scoreResolver.resolveScore(new Object() {
+		});
+
+		Field annotatedElementsField = FieldUtils.getDeclaredField(scoreResolver.getClass(), "annotatedElements", true);
+		Field annotationTypeField = FieldUtils.getDeclaredField(scoreResolver.getClass(), "annotationType", true);
+
+		@SuppressWarnings("unchecked")
+		Map<Class<?>, ?> annotatedElementsBefore = (Map<Class<?>, ?>) annotatedElementsField.get(scoreResolver);
+		@SuppressWarnings("unchecked")
+		Class<? extends Annotation> annotationTypeBefore = (Class<? extends Annotation>) annotationTypeField.get(scoreResolver);
+
+		assertNotNull(annotatedElementsBefore);
+		assertNotNull(annotationTypeBefore);
+
+		assertEquals(1, annotatedElementsBefore.size());
+
+		AnnotatedScoreResolver deserialized = SerializationUtils.roundtrip(scoreResolver);
+
+		@SuppressWarnings("unchecked")
+		Map<Class<?>, ?> annotatedElementsAfter = (Map<Class<?>, ?>) annotatedElementsField.get(deserialized);
+		@SuppressWarnings("unchecked")
+		Class<? extends Annotation> annotationTypeAfter = (Class<? extends Annotation>) annotationTypeField.get(deserialized);
+
+		assertNotNull(annotatedElementsAfter);
+		assertNotNull(annotationTypeAfter);
+
+		assertEquals(0, annotatedElementsAfter.size());
+
+		assertEquals(annotationTypeBefore, annotationTypeAfter);
+	}
 
 	@Test
 	void testResolveScoreNull() {
