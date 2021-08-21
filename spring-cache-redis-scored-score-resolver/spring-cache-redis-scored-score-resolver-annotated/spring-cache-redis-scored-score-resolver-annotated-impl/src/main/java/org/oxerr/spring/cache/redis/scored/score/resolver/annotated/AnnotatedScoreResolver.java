@@ -88,6 +88,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 					.map(OrderedAnnotatedElement::getAnnotatedElement)
 					.orElseThrow(IllegalArgumentException::new);
 			}
+			method.setAccessible(true);
 			annotatedElement = AnnotatedElementWrapper.of(method, AnnotatedElementWrapper.Type.METHOD);
 		} else {
 			final List<Field> fields = FieldUtils.getFieldsListWithAnnotation(valueType, annotationType);
@@ -103,6 +104,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 						.map(OrderedAnnotatedElement::getAnnotatedElement)
 						.orElseThrow(IllegalArgumentException::new);
 				}
+				field.setAccessible(true);
 				annotatedElement = AnnotatedElementWrapper.of(field, AnnotatedElementWrapper.Type.FIELD);
 			} else {
 				annotatedElement = AnnotatedElementWrapper.empty();
@@ -156,20 +158,14 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 			Object value;
 			if (isPresent()) {
 				if (this.type == Type.METHOD) {
-					value = this.invokeMethod((Method) this.annotatedElement, object);
+					value = ((Method) this.annotatedElement).invoke(object);
 				} else {
-					value = FieldUtils.readField((Field) this.annotatedElement, object, true);
+					value = ((Field) this.annotatedElement).get(object);
 				}
 			} else {
 				value = null;
 			}
 			return value;
-		}
-
-		private Object invokeMethod(Method method, Object value)
-				throws IllegalAccessException, InvocationTargetException {
-			method.setAccessible(true);
-			return method.invoke(value);
 		}
 
 	}
