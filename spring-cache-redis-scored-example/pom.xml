@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-example</artifactId>
 	<name>Spring Cache Redis Scored Example</name>
@@ -18,9 +18,9 @@
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<modules>
-		<module>spring-cache-redis-scored-score-example-spring-data-redis-cache</module>
-		<module>spring-cache-redis-scored-score-example-spring-cache-redis-scored</module>
-		<module>spring-cache-redis-scored-score-example-helloworld</module>
+		<module>spring-cache-redis-scored-example-spring-data-redis-cache</module>
+		<module>spring-cache-redis-scored-example-spring-cache-redis-scored</module>
+		<module>spring-cache-redis-scored-example-helloworld</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

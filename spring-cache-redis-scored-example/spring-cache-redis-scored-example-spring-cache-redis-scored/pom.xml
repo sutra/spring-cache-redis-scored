@@ -9,16 +9,13 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored-example</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 	</parent>
-	<artifactId>spring-cache-redis-scored-example-spring-data-redis-cache</artifactId>
-	<name>Spring Cache Redis Scored Example: Spring Data Redis Cache</name>
+	<artifactId>spring-cache-redis-scored-example-spring-cache-redis-scored</artifactId>
+	<name>Spring Cache Redis Scored Example: Spring Cache Redis Scored</name>
 	<description>
-		Demonstration of stale data returned using RedisCache
-		in Spring Data Redis.
-
-		This project is copied from https://github.com/spring-guides/gs-caching
-		and revised.
+		Demonstration of how Spring Cache Redis Scored
+		prevents returning stale data.
 	</description>
 	<build>
 		<plugins>
@@ -30,8 +27,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>
