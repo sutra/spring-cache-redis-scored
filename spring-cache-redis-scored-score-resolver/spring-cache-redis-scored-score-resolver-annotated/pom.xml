@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored-score-resolver</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-score-resolver-annotated</artifactId>
 	<name>Spring Cache Redis Scored Score Resolver Annotated</name>
