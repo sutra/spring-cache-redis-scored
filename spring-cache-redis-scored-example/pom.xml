@@ -18,9 +18,9 @@
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<modules>
-		<module>spring-cache-redis-scored-score-example-spring-data-redis-cache</module>
-		<module>spring-cache-redis-scored-score-example-spring-cache-redis-scored</module>
-		<module>spring-cache-redis-scored-score-example-helloworld</module>
+		<module>spring-cache-redis-scored-example-spring-data-redis-cache</module>
+		<module>spring-cache-redis-scored-example-spring-cache-redis-scored</module>
+		<module>spring-cache-redis-scored-example-helloworld</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
