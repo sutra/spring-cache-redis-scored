@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.2</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-jmh</artifactId>
 	<name>Spring Cache Redis Scored JMH</name>
