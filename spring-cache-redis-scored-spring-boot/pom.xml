@@ -9,9 +9,10 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-spring-boot</artifactId>
+	<name>Spring Cache Redis Scored Spring Boot</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>spring-cache-redis-scored-spring-boot-autoconfigure</module>
@@ -22,7 +23,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>2.5.3</version>
+				<version>2.5.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

@@ -1,0 +1,7 @@
+spring:
+  cache:
+    redis:
+      key-prefix: "spring-cache-redis-scored-example-helleworld::"
+      time-to-live: "10m"
+  jpa:
+    show-sql: true

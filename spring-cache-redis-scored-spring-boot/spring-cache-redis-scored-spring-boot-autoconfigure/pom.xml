@@ -9,9 +9,10 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored-spring-boot</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-spring-boot-autoconfigure</artifactId>
+	<name>Spring Cache Redis Scored Spring Boot Auto Configure</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,8 +45,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -55,7 +56,13 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-score-resolver-annotated</artifactId>
+			<artifactId>spring-cache-redis-scored-score-resolver-annotated-annotation</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-score-resolver-default</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

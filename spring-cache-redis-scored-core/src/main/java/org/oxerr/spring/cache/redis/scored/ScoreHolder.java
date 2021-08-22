@@ -1,23 +1,29 @@
 package org.oxerr.spring.cache.redis.scored;
 
-class ScoreHolder {
+import java.io.Serializable;
 
-	private static final InheritableThreadLocal<Double> score = new InheritableThreadLocal<>();
+/**
+ * Score holder.
+ */
+public interface ScoreHolder extends Serializable {
 
-	private ScoreHolder() {
-		throw new AssertionError("No " + this.getClass() + " instances for you!");
-	}
+	/**
+	 * Returns the score.
+	 *
+	 * @return the score, may be {@literal null}.
+	 */
+	Double get();
 
-	public static Double get() {
-		return score.get();
-	}
+	/**
+	 * Set the score.
+	 *
+	 * @param score the score, may be {@literal null}.
+	 */
+	void set(Double score);
 
-	public static void set(Double value) {
-		score.set(value);
-	}
-
-	public static void remove() {
-		score.remove();
-	}
+	/**
+	 * Remove the score.
+	 */
+	void remove();
 
 }

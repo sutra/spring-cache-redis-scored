@@ -7,9 +7,10 @@
 	<parent>
 		<groupId>org.oxerr.spring.cache.redis.scored</groupId>
 		<artifactId>spring-cache-redis-scored</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>spring-cache-redis-scored-coverage</artifactId>
+	<name>Spring Cache Redis Scored Coverage</name>
 	<description>Compute aggregated test code coverage.</description>
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
@@ -22,17 +23,32 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-score-resolver-annotation</artifactId>
+			<artifactId>spring-cache-redis-scored-score-resolver-annotated-annotation</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-cache-redis-scored-score-resolver-annotated</artifactId>
+			<artifactId>spring-cache-redis-scored-score-resolver-annotated-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-score-resolver-inherited-inheritable</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-score-resolver-inherited-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>spring-cache-redis-scored-spring-boot-autoconfigure</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-cache-redis-scored-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
