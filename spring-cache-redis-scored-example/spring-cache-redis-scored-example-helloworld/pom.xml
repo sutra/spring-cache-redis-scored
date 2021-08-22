@@ -11,7 +11,7 @@
 		<artifactId>spring-cache-redis-scored-example</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>spring-cache-redis-scored-example-helleworld</artifactId>
+	<artifactId>spring-cache-redis-scored-example-helloworld</artifactId>
 	<name>Spring Cache Redis Scored Example: Hello World</name>
 	<description>
 		Demonstration of how to use Spring Cache Redis Scored.
