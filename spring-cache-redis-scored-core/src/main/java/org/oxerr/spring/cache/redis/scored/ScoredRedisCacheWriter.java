@@ -198,9 +198,7 @@ public class ScoredRedisCacheWriter implements RedisCacheWriter {
 	}
 
 	private double getScore() {
-		final Double score = Optional.ofNullable(this.scoreHolder.get())
-			.orElse(DEFAULT_SCORE);
-		return score.doubleValue();
+		return Optional.ofNullable(this.scoreHolder.get()).orElse(DEFAULT_SCORE);
 	}
 
 }
