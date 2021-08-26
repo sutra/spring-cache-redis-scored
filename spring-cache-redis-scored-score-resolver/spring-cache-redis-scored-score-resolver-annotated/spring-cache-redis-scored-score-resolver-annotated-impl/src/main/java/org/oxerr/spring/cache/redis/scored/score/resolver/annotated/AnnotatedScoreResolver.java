@@ -83,8 +83,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 			} else {
 				method = methods.stream()
 					.map(OrderedAnnotatedElement::new)
-					.sorted((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
-					.findFirst()
+					.min((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
 					.map(OrderedAnnotatedElement::getAnnotatedElement)
 					.orElseThrow(IllegalArgumentException::new);
 			}
@@ -99,8 +98,7 @@ public class AnnotatedScoreResolver implements ScoreResolver {
 				} else {
 					field = fields.stream()
 						.map(OrderedAnnotatedElement::new)
-						.sorted((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
-						.findFirst()
+						.min((a, b) -> Integer.compare(a.getOrder(), b.getOrder()))
 						.map(OrderedAnnotatedElement::getAnnotatedElement)
 						.orElseThrow(IllegalArgumentException::new);
 				}
