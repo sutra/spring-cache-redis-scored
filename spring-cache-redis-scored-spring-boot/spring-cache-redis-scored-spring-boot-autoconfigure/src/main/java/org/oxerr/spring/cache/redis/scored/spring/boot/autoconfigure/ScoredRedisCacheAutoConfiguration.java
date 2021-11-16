@@ -32,7 +32,7 @@ import org.springframework.lang.Nullable;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ ScoredRedisCacheInterceptor.class, ScoredRedisCacheWriter.class })
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-class ScoredRedisCacheAutoConfiguration {
+public class ScoredRedisCacheAutoConfiguration {
 
 	@Bean
 	public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(
